@@ -3,14 +3,17 @@ import contract from '../contracts/users.contract'
 
 describe('Testes da Funcionalidade Usuários', () => {
 
-  it.only('Deve validar contrato de usuários', () => {
+  it('Deve validar contrato de usuários', () => {
     cy.request('usuarios').then(response=>{
       return contract.validateAsync(response.body)
     })
   });
 
-  it('Deve listar usuários cadastrados', () => {
-    //TODO: 
+  it.only('Deve listar usuários cadastrados', () => {
+    cy.listUsers().should((response)=>{
+      expect(response.status).equal(200)
+      expect(response.body).to.have.property('usuarios')
+    })
   });
 
   it('Deve cadastrar um usuário com sucesso', () => {
