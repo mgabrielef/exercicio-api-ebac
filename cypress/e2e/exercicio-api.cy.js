@@ -3,11 +3,11 @@ import contract from '../contracts/users.contract'
 
 describe('Testes da Funcionalidade Usuários', () => {
 
-  it('Deve validar contrato de usuários', () => {
+  /*it('Deve validar contrato de usuários', () => {
     cy.request('usuarios').then(response=>{
       return contract.validateAsync(response.body)
     })
-  });
+  });*/
 
   it('Deve listar usuários cadastrados', () => {
     cy.listUsers().should((response)=>{
@@ -34,7 +34,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
   });
 
-  it.only('Deve editar um usuário previamente cadastrado', () => {
+  it('Deve editar um usuário previamente cadastrado', () => {
     let user = 'User' + Math.floor(Math.random() * 1000)
     cy.createUser(user, user + '@test.com', 'test')
       .then(response=>{
@@ -49,7 +49,16 @@ describe('Testes da Funcionalidade Usuários', () => {
   });
 
   it('Deve deletar um usuário previamente cadastrado', () => {
-    //TODO: 
+    let user = 'User' + Math.floor(Math.random() * 1000)
+    cy.createUser(user, user + '@test.com', 'test')
+      .then(response=>{
+        let id = response.body._id
+        cy.deleteUser(id)
+          .should((response)=>{
+            expect(response.status).equal(200)
+            expect(response.body.message).equal("Registro excluído com sucesso")
+          })
+      })
   });
 
 

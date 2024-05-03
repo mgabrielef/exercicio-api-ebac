@@ -45,3 +45,10 @@ Cypress.Commands.add('token', (email, senha) => {
         }
     })
  })
+
+ Cypress.Commands.add('deleteUser', (id)=>{
+    cy.request({
+        method: 'DELETE',
+        url: `usuarios/${id}`
+    })
+ })
