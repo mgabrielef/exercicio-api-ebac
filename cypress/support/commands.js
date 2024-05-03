@@ -18,3 +18,16 @@ Cypress.Commands.add('token', (email, senha) => {
         url: 'usuarios',
     })
  })
+
+ Cypress.Commands.add('createUser', (name, email, password)=>{
+    cy.request({
+        method: 'POST',
+        url: 'usuarios',
+        body:{
+            "nome": name,
+            "email": email,
+            "password": password,
+            "administrador": "true"
+        }
+    })
+ })
