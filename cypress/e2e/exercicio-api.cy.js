@@ -19,23 +19,33 @@ describe('Testes da Funcionalidade Usuários', () => {
   it('Deve cadastrar um usuário com sucesso', () => {
     let user = 'User' + Math.floor(Math.random() * 1000)
     cy.createUser(user, user + '@test.com', 'test')
-    .should((response)=>{
-      expect(response.status).equal(201)
-      expect(response.body.message).equal("Cadastro realizado com sucesso")
+      .should((response)=>{
+        expect(response.status).equal(201)
+        expect(response.body.message).equal("Cadastro realizado com sucesso")
     })
   });
 
-  it.only('Deve validar um usuário com email inválido', () => {
+  it('Deve validar um usuário com email inválido', () => {
     let user = 'User ' + Math.floor(Math.random() * 1000)
     cy.createUser(user, user + '@test.com', 'test')
-    .should((response)=>{
-      expect(response.status).equal(400)
-      expect(response.body.email).equal("email deve ser um email válido")
+      .should((response)=>{
+        expect(response.status).equal(400)
+        expect(response.body.email).equal("email deve ser um email válido")
     })
   });
 
-  it('Deve editar um usuário previamente cadastrado', () => {
-    //TODO: 
+  it.only('Deve editar um usuário previamente cadastrado', () => {
+    let user = 'User' + Math.floor(Math.random() * 1000)
+    cy.createUser(user, user + '@test.com', 'test')
+      .then(response=>{
+        let id = response.body._id
+        cy.editUser(id, `Edited ${user}`, `edited${user}@test.com`, 'test')
+          .should((response)=>{
+            expect(response.status).equal(200)
+            expect(response.body.message).equal("Registro alterado com sucesso")
+          })
+      })
+
   });
 
   it('Deve deletar um usuário previamente cadastrado', () => {

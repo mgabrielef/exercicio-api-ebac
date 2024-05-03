@@ -32,3 +32,16 @@ Cypress.Commands.add('token', (email, senha) => {
         failOnStatusCode: false
     })
  })
+
+ Cypress.Commands.add('editUser', (id, name, email,password)=>{
+    cy.request({
+        method: 'PUT',
+        url: `usuarios/${id}`,
+        body:{
+            "nome": name,
+            "email": email,
+            "password": password,
+            "administrador": "true"
+        }
+    })
+ })
