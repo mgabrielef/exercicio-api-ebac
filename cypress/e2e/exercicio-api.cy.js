@@ -16,7 +16,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
   });
 
-  it.only('Deve cadastrar um usuário com sucesso', () => {
+  it('Deve cadastrar um usuário com sucesso', () => {
     let user = 'User' + Math.floor(Math.random() * 1000)
     cy.createUser(user, user + '@test.com', 'test')
     .should((response)=>{
@@ -25,8 +25,13 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
   });
 
-  it('Deve validar um usuário com email inválido', () => {
-    //TODO: 
+  it.only('Deve validar um usuário com email inválido', () => {
+    let user = 'User ' + Math.floor(Math.random() * 1000)
+    cy.createUser(user, user + '@test.com', 'test')
+    .should((response)=>{
+      expect(response.status).equal(400)
+      expect(response.body.email).equal("email deve ser um email válido")
+    })
   });
 
   it('Deve editar um usuário previamente cadastrado', () => {

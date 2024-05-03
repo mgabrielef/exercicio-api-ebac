@@ -28,6 +28,7 @@ Cypress.Commands.add('token', (email, senha) => {
             "email": email,
             "password": password,
             "administrador": "true"
-        }
+        },
+        failOnStatusCode: false
     })
  })
